@@ -5,7 +5,7 @@ Automated backup solution for Paperless-NGX with remote storage and Telegram not
 ## Architecture
 
 - **Source:** Paperless-NGX (Docker) on Linux server
-- **Destination:** Raspberry Pi 4 on local network
+- **Destination:** Raspberry Pi 4 on local network (or any linux mashin with ssh client)
 - **Method:** Direct stream from container via tar+ssh
 - **Notifications:** Telegram bot with full backup logs
 - **Scheduling:** Daily smart backups + monthly full backups
@@ -26,7 +26,6 @@ Detailed backup process with step-by-step interactions:
 
 *[View PlantUML source](backup-flow.puml)*
 
-**Note:** Replace `YOUR_USERNAME/YOUR_REPO` with your GitHub username and repository name after pushing.
 
 ## Features
 
@@ -194,8 +193,6 @@ Add:
 ├── docker-compose.yml           # Paperless-NGX configuration
 ├── docker-compose.env           # Paperless environment variables
 ├── logs/                        # Backup logs (30-day retention)
-├── export/                      # Local export directory (not used)
-├── consume/                     # Paperless consume directory
 └── README.md                    # This file
 ```
 
@@ -337,14 +334,6 @@ docker compose exec -T webserver document_importer /tmp/restore
 
 **Note:** Imports must use the same Paperless version as the export.
 
-## Performance
-
-- Export size: ~820MB (226 documents)
-- Backup duration: ~42 seconds
-- Transfer method: tar+gzip over SSH
-- Network: Local gigabit
-- Incremental: Only changed files
-
 ## License
 
 MIT
@@ -353,3 +342,6 @@ MIT
 
 - [Paperless-NGX Documentation](https://docs.paperless-ngx.com/administration/#exporter)
 - [Telegram Bot API](https://core.telegram.org/bots/api)
+
+## Disclaimer 
+Heavy use of "claude code" so be aware of possible AI Slobe :=) now warranty, no regards, some tears at the end...
