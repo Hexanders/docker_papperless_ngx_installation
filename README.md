@@ -10,7 +10,17 @@ Automated backup solution for Paperless-NGX with remote storage and Telegram not
 - **Notifications:** Telegram bot with full backup logs
 - **Scheduling:** Daily smart backups + monthly full backups
 
+### System Architecture
+
+High-level overview of components and data flow:
+
+![Architecture Schematic](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Hexanders/docker_papperless_ngx_installation/main/architecture-schematic.puml)
+
+*[View PlantUML source](architecture-schematic.puml)*
+
 ### Communication Flow Diagram
+
+Detailed backup process with step-by-step interactions:
 
 ![Backup Flow](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Hexanders/docker_papperless_ngx_installation/main/backup-flow.puml)
 

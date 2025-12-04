@@ -1,0 +1,75 @@
+@startuml
+
+title Paperless-NGX Backup System - Architecture
+
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+!define SERVER_COLOR #E3F2FD
+!define PI_COLOR #E8F5E9
+!define EXTERNAL_COLOR #FFF3E0
+
+rectangle "Source Server" SERVER_COLOR {
+    component "Paperless-NGX\n(Docker)" as Paperless {
+        database "PostgreSQL\nDatabase" as DB
+        folder "Document\nExporter" as Exporter
+    }
+
+    component "Backup Scripts" as Scripts {
+        [Smart Backup\n(Daily)]
+        [Full Backup\n(Monthly)]
+    }
+
+    component "Notification\nService" as NotifyScript
+
+    folder "Local Logs" as Logs
+}
+
+rectangle "Backup Target" PI_COLOR {
+    component "SSH Server" as SSH
+    database "Backup\nStorage" as Storage
+}
+
+cloud "External Services" EXTERNAL_COLOR {
+    component "Telegram Bot\nAPI" as Telegram
+}
+
+actor "Scheduler\n(cron)" as Cron
+actor "User" as User
+
+' Relationships
+Cron --> Scripts : "Trigger backups"
+Scripts --> DB : "Check for\nchanges"
+Scripts --> Exporter : "Export\ncommand"
+Exporter --> SSH : "Stream data\n(tar+ssh)"
+SSH --> Storage : "Store backup"
+Scripts --> Logs : "Write logs"
+Scripts --> NotifyScript : "Send notification"
+NotifyScript --> Telegram : "POST request"
+Telegram --> User : "Status message"
+
+note right of Scripts
+  **Smart Backup:**
+  - Checks for changes
+  - Skips if unchanged
+
+  **Full Backup:**
+  - Always runs
+  - Complete export
+end note
+
+note right of Exporter
+  Direct streaming:
+  - No local copy
+  - Compressed transfer
+  - Efficient bandwidth use
+end note
+
+note bottom of Telegram
+  Notifications for:
+  - Success ✅
+  - Skipped ℹ️
+  - Errors ❌
+end note
+
+@enduml
