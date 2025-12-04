@@ -183,8 +183,6 @@ Add:
 ├── docker-compose.yml           # Paperless-NGX configuration
 ├── docker-compose.env           # Paperless environment variables
 ├── logs/                        # Backup logs (30-day retention)
-├── export/                      # Local export directory (not used)
-├── consume/                     # Paperless consume directory
 └── README.md                    # This file
 ```
 
