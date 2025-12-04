@@ -1,0 +1,31 @@
+@startuml
+
+title Paperless-NGX Backup System - Overview
+
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+!define SERVER_COLOR #E3F2FD
+!define PI_COLOR #E8F5E9
+!define TELEGRAM_COLOR #FFF9C4
+
+rectangle "Linux Server" SERVER_COLOR {
+    component "Paperless-NGX" as Paperless
+    component "(Docker)" as Docker
+    component " " as Space1
+    database "PostgreSQL DB" as DB
+}
+
+rectangle "Raspberry Pi" PI_COLOR {
+    component "Backup Server" as Pi
+    component " " as Space2
+    component " " as Space3
+    database "Backup Storage" as Storage
+}
+
+cloud "Telegram Bot" TELEGRAM_COLOR
+
+DB -right-> Storage : "tar+ssh"
+Paperless -down-> Telegram : "Python script\n(logs)"
+
+@enduml
