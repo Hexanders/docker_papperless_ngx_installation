@@ -5,7 +5,7 @@ Automated backup solution for Paperless-NGX with remote storage and Telegram not
 ## Architecture
 
 - **Source:** Paperless-NGX (Docker) on Linux server
-- **Destination:** Raspberry Pi 4 on local network
+- **Destination:** Raspberry Pi 4 on local network (or any linux mashin with ssh client)
 - **Method:** Direct stream from container via tar+ssh
 - **Notifications:** Telegram bot with full backup logs
 - **Scheduling:** Daily smart backups + monthly full backups
