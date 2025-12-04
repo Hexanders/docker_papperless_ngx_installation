@@ -43,7 +43,7 @@ alt Documents Changed
 
     BackupScript -> Container: docker compose exec\ndocument_exporter
     activate Container
-    Container -> Export: Export documents\n(818MB)
+    Container -> Export: Export documents
     deactivate Container
 
     BackupScript -> Export: tar -czf -
@@ -53,7 +53,7 @@ alt Documents Changed
 
     BackupScript -> SSH: SSH pipe
     activate SSH
-    SSH -> Storage: Extract files\n(817.2MB)
+    SSH -> Storage: Extract files
     deactivate SSH
 
     BackupScript -> Logs: Log success
