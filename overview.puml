@@ -4,9 +4,9 @@ title Paperless-NGX Backup System - Overview
 
 skinparam backgroundColor #FFFFFF
 
-rectangle "Linux Server\n \nPaperless-NGX\n(Docker)" as Server #E3F2FD
+rectangle "**Source Server**\n e.g. Linux Server\n \nPaperless-NGX\n(Docker)" as Server #E3F2FD
 
-rectangle "Raspberry Pi\n \nBackup Storage" as Pi #E8F5E9
+rectangle "**Backup Target**\n e.g. Raspberry Pi\n \nBackup Storage" as Pi #E8F5E9
 
 cloud "Telegram Bot\n \n(Notifications)" as Telegram #FFF9C4
 
