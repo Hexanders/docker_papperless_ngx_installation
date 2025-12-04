@@ -324,14 +324,6 @@ docker compose exec -T webserver document_importer /tmp/restore
 
 **Note:** Imports must use the same Paperless version as the export.
 
-## Performance
-
-- Export size: ~820MB (226 documents)
-- Backup duration: ~42 seconds
-- Transfer method: tar+gzip over SSH
-- Network: Local gigabit
-- Incremental: Only changed files
-
 ## License
 
 MIT
@@ -340,3 +332,6 @@ MIT
 
 - [Paperless-NGX Documentation](https://docs.paperless-ngx.com/administration/#exporter)
 - [Telegram Bot API](https://core.telegram.org/bots/api)
+
+## Disclaimer 
+Heavy use of "claude code" so be aware of possible AI Slobe :=) now warranty, no regards, some tears at the end...
