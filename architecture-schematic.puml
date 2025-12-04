@@ -67,9 +67,9 @@ end note
 
 note bottom of Telegram
   Notifications for:
-  - Success ✅
-  - Skipped ℹ️
-  - Errors ❌
+  - Success <:2611:>
+  - Skipped <:26a0:>
+  - Errors <:274c:>
 end note
 
 @enduml
