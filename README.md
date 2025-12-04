@@ -16,7 +16,6 @@ Automated backup solution for Paperless-NGX with remote storage and Telegram not
 
 *[View PlantUML source](backup-flow.puml)*
 
-**Note:** Replace `YOUR_USERNAME/YOUR_REPO` with your GitHub username and repository name after pushing.
 
 ## Features
 
