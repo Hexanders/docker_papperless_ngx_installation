@@ -1,0 +1,14 @@
+# Telegram Bot Configuration for Paperless-NGX Backup Notifications
+# Copy this file to .telegram-config and fill in your values
+
+# Your Telegram Bot Token (get from @BotFather)
+# Example: BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+BOT_TOKEN=your_bot_token_here
+
+# Your Telegram Chat ID (your user ID or group chat ID)
+# To find your chat ID:
+# 1. Message your bot
+# 2. Visit: https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+# 3. Look for "chat":{"id":123456789}
+# Example: CHAT_ID=123456789
+CHAT_ID=your_chat_id_here

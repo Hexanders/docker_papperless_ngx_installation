@@ -1,0 +1,103 @@
+@startuml
+
+title Paperless-NGX Backup System - Communication Flow
+
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #2C3E50
+skinparam ActorBorderColor #3498DB
+skinparam ParticipantBorderColor #3498DB
+
+actor Cron
+box "Linux Server" #LightBlue
+    participant "backup-if-changed.sh" as SmartScript
+    participant "backup.sh" as BackupScript
+    database "PostgreSQL" as DB
+    participant "Paperless\nContainer" as Container
+    collections "Export\n(/usr/src/paperless/export)" as Export
+    participant "Logs" as Logs
+    participant "telegram-notify.py" as Telegram
+end box
+
+box "Raspberry Pi 4" #LightGreen
+    participant "SSH Server" as SSH
+    collections "Backup Storage\n(/home/hassio/paperless-backup)" as Storage
+end box
+
+box "Telegram" #SkyBlue
+    participant "Telegram API" as TelegramAPI
+    actor User
+end box
+
+== Daily Smart Backup (2:00 AM) ==
+
+Cron -> SmartScript: Trigger (0 2 * * *)
+activate SmartScript
+
+SmartScript -> DB: Query latest document\nmodification time
+DB --> SmartScript: Return timestamp
+
+alt Documents Changed
+    SmartScript -> Logs: Create log file
+    SmartScript -> BackupScript: Execute
+    activate BackupScript
+
+    BackupScript -> Container: docker compose exec\ndocument_exporter
+    activate Container
+    Container -> Export: Export documents\n(818MB)
+    deactivate Container
+
+    BackupScript -> Export: tar -czf -
+    activate Export
+    Export --> BackupScript: Stream compressed data
+    deactivate Export
+
+    BackupScript -> SSH: SSH pipe
+    activate SSH
+    SSH -> Storage: Extract files\n(817.2MB)
+    deactivate SSH
+
+    BackupScript -> Logs: Log success
+    BackupScript -> Telegram: Send notification
+    activate Telegram
+    Telegram -> TelegramAPI: POST with log
+    TelegramAPI -> User: ✅ Backup Success
+    deactivate Telegram
+
+    deactivate BackupScript
+    SmartScript -> SmartScript: Update timestamp
+
+else No Changes
+    SmartScript -> Logs: Log skip
+    SmartScript -> Telegram: Send notification
+    activate Telegram
+    Telegram -> TelegramAPI: POST with log
+    TelegramAPI -> User: ℹ️ Skipped (No changes)
+    deactivate Telegram
+end
+
+deactivate SmartScript
+
+== Monthly Full Backup (1st at 3:00 AM) ==
+
+Cron -> BackupScript: Trigger (0 3 1 * *)
+activate BackupScript
+
+BackupScript -> Container: Export documents
+activate Container
+Container -> Export: Export all
+deactivate Container
+
+BackupScript -> SSH: Stream via tar+ssh
+activate SSH
+SSH -> Storage: Write backup
+deactivate SSH
+
+BackupScript -> Telegram: Send notification
+activate Telegram
+Telegram -> TelegramAPI: POST with log
+TelegramAPI -> User: 🔔 Monthly Backup
+deactivate Telegram
+
+deactivate BackupScript
+
+@enduml

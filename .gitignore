@@ -1,0 +1,20 @@
+# Sensitive configuration files (use .template files instead)
+docker-compose.yml
+docker-compose.env
+.telegram-config
+
+# Environment and secrets
+.env
+
+# Logs and temporary files
+*.log
+logs/
+.last_backup_timestamp
+
+# Data directories
+data/
+consume/
+export/
+
+# Private documentation
+chat-history.md
